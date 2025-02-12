@@ -1,0 +1,50 @@
+docker container run hello-world
+docker container run --name meuhello hello-world
+docker container run --rm  hello-world
+docker container ls -a
+docker container rm 
+docker image ls
+ docker image ls -a
+
+docker container run nginx
+docker container rm -f d722
+docker container run -d nginx
+
+docker exec -it 49d1 /bin/bash
+
+docker container run -d -p 3001:3001 nginx
+docker image ls -a
+
+docker image rm 69
+
+docker container run -d -p 5432:5432 postgres
+
+docker logs 68
+
+docker container run -d -p 5432:5432 --name aws_psql -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=12345678 -e POSTGRES_DB=aws_db postgres
+
+docker container run -d -p 3001:3001 -e PGADMIN_USER=victor9soares@gmail.com -e PGADMIN_PASSWORD=12345678 dpage/pgadmin4
+
+docker container run -d -p 3001:3001 -e PGADMIN_USER=victor9soares@gmail.com -e PGADMIN_PASSWORD=12345678 -e PGADMIN_DEFAULT_EMAIL=victor9soares@gmail.com -e PGADMIN_DEFAULT_PASSWORD=12345678 dpage/pgadmin4
+
+docker network ls
+docker network create game_catalog
+
+docker container run -d -p 5432:5432 --name fullstack_dev  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=12345678 -e POSTGRES_DB=fullstack_db --network game_catalog  postgres
+
+docker container run -d -p 3001:3001 -e PGADMIN_DEFAULT_EMAIL=victor9soares@gmail.com -e PGADMIN_DEFAULT_PASSWORD=12345678 --name pgadmin4 --network game_catalog dpage/pgadmin4
+
+docker build -t nextjsdocker .
+
+docker image prume
+docker container rm -f $(docker container ls -a -q)
+
+
+docker volume ls -a 
+docker volume create postgres-vol
+docker volume rm -f $(docker volume ls -q)
+
+docker container run -d -p 5432:5432 --name fullstack_dev  -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=12345678 -e POSTGRES_DB=fullstack_db --network game_catalog -v postgres-vol:/var/lib/postgresql/data  postgres
+
+ docker container ls -a
+docker container run -d -p 3001:3001 -e PGADMIN_DEFAULT_EMAIL=victor9soares@gmail.com -e PGADMIN_DEFAULT_PASSWORD=12345678 --name pgadmin4 --network game_catalog dpage/pgadmin4
