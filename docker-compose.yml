@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   app:
     build: .
@@ -53,4 +51,4 @@ volumes:
 
 networks:
   game_catalog:
-    external: true
+    driver: bridge
