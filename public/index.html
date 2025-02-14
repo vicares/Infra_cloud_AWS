@@ -9,15 +9,24 @@
 <body>
     <div class="login-container">
         <h2>Login</h2>
-        <form>
-            <input type="email" placeholder="Email" required>
-            <input type="password" placeholder="Senha" required>
-            <select required>
-                <option value="" disabled selected>Selecione seu tipo</option>
+        <form id="loginForm">
+            <h2>Login</h2>
+            <input type="email" id="loginEmail" placeholder="Email" required>
+            <input type="password" id="loginSenha" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+            <p>Não tem uma conta? <a href="#" id="showRegister">Cadastre-se</a></p>
+        </form>
+        
+        <form id="registerForm" style="display: none;">
+            <h2>Cadastro</h2>
+            <input type="email" id="registerEmail" placeholder="Email" required>
+            <input type="password" id="registerSenha" placeholder="Senha" required>
+            <select id="registerTipo">
                 <option value="aluno">Aluno</option>
                 <option value="professor">Professor</option>
             </select>
-            <button type="submit">Entrar</button>
+            <button type="submit">Criar Conta</button>
+            <p>Já tem uma conta? <a href="#" id="showLogin">Faça login</a></p>
         </form>
     </div>
 </body>
