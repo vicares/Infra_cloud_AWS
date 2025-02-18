@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo - Catálogo</title>
+    <link rel="stylesheet" href="styles_games.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Seção do vídeo e descrição -->
+        <div class="game-intro">
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/SEU_VIDEO_AQUI" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="description-container">
+                <h2>Nome do Jogo</h2>
+                <p>Descrição detalhada do jogo. Aqui você pode falar sobre a história, jogabilidade e outros detalhes interessantes.</p>
+            </div>
+        </div>
+
+        <!-- Caixa de Comentários -->
+        <div class="comments-section">
+            <h3>Comentários</h3>
+            <div id="comments-container">
+                <!-- Comentários serão adicionados aqui -->
+            </div>
+            <form id="comment-form">
+                <input type="text" id="user-name" placeholder="Seu nome" required>
+                <textarea id="user-comment" placeholder="Deixe seu comentário..." required></textarea>
+                <button type="submit">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

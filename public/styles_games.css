@@ -1,0 +1,84 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.container {
+    width: 80%;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Seção do vídeo e descrição */
+.game-intro {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.video-container {
+    flex: 1;
+}
+
+.description-container {
+    flex: 1;
+}
+
+/* Estilização da caixa de comentários */
+.comments-section {
+    margin-top: 20px;
+}
+
+#comments-container {
+    margin-bottom: 20px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.comment .username {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Formulário de comentários */
+#comment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#comment-form input, 
+#comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#comment-form button {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#comment-form button:hover {
+    background: #0056b3;
+}

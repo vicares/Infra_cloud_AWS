@@ -12,55 +12,51 @@ User.prototype.checksenha = async function (password) {
 };
 
 // Criar um usuário (Cadastro)
-router.post("/register", async (req, res) => {
-    try {
-        const { email, password, role } = req.body;
+router.post('/register', async (req, res) => {
+    const { email, password, role } = req.body;
 
-        // Validação dos campos
-        if (!email || !password || !role) {
-            return res.status(400).json({ error: "Todos os campos são obrigatórios" });
+    // Verificação para garantir que todos os campos foram preenchidos
+    if (!email || !password || !role) {
+        return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+    }
+
+    try {
+        // Verificar se o email já está cadastrado
+        const userExists = await User.findOne({ where: { email } });
+        if (userExists) {
+            return res.status(400).json({ error: 'Email já está em uso.' });
         }
 
-        // Criptografa a password antes de salvar no banco de dados
-        const senha = await bcrypt.hash(password, 10);
+        // Criando o novo usuário
+        const newUser = await User.create({ email, password, role });
 
-        // Cria o usuário no banco de dados
-        const newUser = await User.create({ email, password: senha, role });
-
-        // Retorna sucesso
-        res.status(201).json({ message: "Usuário cadastrado com sucesso", id: newUser.id });
+        // Retornando resposta de sucesso
+        res.status(201).json({ message: 'Usuário criado com sucesso', user: newUser });
     } catch (error) {
-        console.error("Erro ao cadastrar usuário:", error);
-        res.status(500).json({ error: "Erro ao cadastrar usuário" });
+        // Caso ocorra um erro, retornamos uma mensagem
+        console.error(error);
+        res.status(500).json({ error: 'Erro ao criar conta.' });
     }
 });
 
 // Autenticação (Login)
-router.post("/login", async (req, res) => {
+router.post('/index', async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
 
-        // Validação dos campos
-        if (!email || !password) {
-            return res.status(400).json({ error: "E-mail e senha são obrigatórios" });
+        if (!email || !password || !role) {
+            return res.status(400).json({ error: "Todos os campos são obrigatórios." });
         }
 
-        // Busca o usuário no banco de dados
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email, role } });
 
-        // Verifica se o usuário existe e se a senha está correta
-        if (!user || !(await user.checksenha(password))) {
-            return res.status(401).json({ error: "Credenciais inválidas" });
+        if (!user || !(await bcrypt.compare(password, user.password))) {
+            return res.status(401).json({ error: "Credenciais inválidas." });
         }
 
-        // Gera o token JWT
-        const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: "1h" });
-
-        // Retorna o token
-        res.json({ message: "Login bem-sucedido", token });
+        res.json({ message: "Login bem-sucedido!" });
     } catch (error) {
-        console.error("Erro ao fazer login:", error);
-        res.status(500).json({ error: "Erro ao fazer login" });
+        res.status(500).json({ error: "Erro ao fazer login", details: error.message });
     }
 });
 

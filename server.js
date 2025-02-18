@@ -12,18 +12,23 @@ const PORT = process.env.PORT || 3001;
 // Middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, './public')));
 app.use("/routes", userRoutes);
 
 // Rotas
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'));
-});
-
 app.use(userRoutes);
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'));
+});
+
+app.get('/register', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/register.html'));
+});
+
+app.get('/game', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/game.html'));
 });
 
 // Inicialização do servidor

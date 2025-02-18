@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link rel="stylesheet" href="styles_register.css">
+</head>
+<body>
+    <div class="container">
+        <form id="registerForm" method="POST" action="/register">
+            <input type="email" id="registerEmail" name="email" placeholder="Email" required>
+            <input type="password" id="registerSenha" name="password" placeholder="Senha" required>
+            <select id="registerTipo"name="role" required>
+                <option value="aluno">Aluno</option>
+                <option value="professor">Professor</option>
+            </select>
+            <button type="submit">Criar Conta</button>        
+            <p>Já tem uma conta? <a href="index.html" id="ShowLogin">Faça login</a></p>
+        </form>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
