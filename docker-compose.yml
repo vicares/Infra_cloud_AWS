@@ -19,7 +19,7 @@ services:
       - game_catalog
 
   db:
-    image: postgres
+    image: postgres:latest
     container_name: catalogo_jogos_db
     restart: always
     environment:
@@ -32,6 +32,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     networks:
       - game_catalog
+
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin4

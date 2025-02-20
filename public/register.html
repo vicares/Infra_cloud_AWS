@@ -8,15 +8,16 @@
 </head>
 <body>
     <div class="container">
-        <form id="registerForm" method="POST" action="/register">
+        <form id="registerForm">
             <input type="email" id="registerEmail" name="email" placeholder="Email" required>
             <input type="password" id="registerSenha" name="password" placeholder="Senha" required>
-            <select id="registerTipo"name="role" required>
+            <input type="text" id="registerUsername" name="username" placeholder="Username" required>
+            <select id="registerTipo" name="role" required>
                 <option value="aluno">Aluno</option>
                 <option value="professor">Professor</option>
             </select>
             <button type="submit">Criar Conta</button>        
-            <p>Já tem uma conta? <a href="index.html" id="ShowLogin">Faça login</a></p>
+            <p>Já tem uma conta? <a href="/login" id="ShowLogin">Faça login</a></p>
         </form>
     </div>
 

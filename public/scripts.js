@@ -1,40 +1,39 @@
 // Função para registrar um novo usuário
-document.getElementById("registerForm").addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita que a página recarregue
+document.getElementById('registerForm')?.addEventListener('submit', async function (event) {
+    event.preventDefault();
 
-    const email = document.getElementById("registerEmail").value;
-    const senha = document.getElementById("registerSenha").value;
-    const tipo = document.getElementById("registerTipo").value;
+    // Pega os valores dos campos
+    const email = document.getElementById('registerEmail').value;
+    const password = document.getElementById('registerSenha').value;
+    const role = document.getElementById('registerTipo').value;
+    const username = document.getElementById('registerUsername').value;
 
-    if (!email || !senha || !tipo) {
-        alert("Todos os campos são obrigatórios.");
-        return;
-    }
+    try {
+        const response = await fetch('/register', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password, role, username })
+        });
 
-    const response = await fetch("/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ email, senha, tipo })
-    });
+        if (!response.ok) {
+            const result = await response.json();
+            throw new Error(result.error || 'Erro ao criar conta.');
+        }
 
-    const data = await response.json();
-    
-    if (response.ok) {
-        alert(data.message); // Mensagem de sucesso
-        window.location.href = "/index"; // Redireciona para login
-    } else {
-        alert(data.message); // Mensagem de erro
+        // Exibe pop-up de sucesso
+        alert('Conta criada com sucesso! Redirecionando para login...');
+
+        // Redireciona para a página de login
+        window.location.href = '/';
+    } catch (error) {
+        alert(error.message);
     }
 });
 
-
-
-
-
 // Função para fazer login
-document.getElementById('loginForm')?.addEventListener('submit', async (event) => {
+document.getElementById('loginForm')?.addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const email = document.getElementById('email').value;
@@ -42,36 +41,58 @@ document.getElementById('loginForm')?.addEventListener('submit', async (event) =
     const role = document.getElementById('role').value;
 
     try {
-        const response = await fetch('/index', {
+        const response = await fetch('/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password, role }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password, role })
         });
 
-        const data = await response.json();
-
         if (response.ok) {
+            const data = await response.json();
             localStorage.setItem('userRole', role); // Armazena o tipo de usuário
-            window.location.href = 'game.html'; // Redireciona para a página de jogos
+            localStorage.setItem('userId', data.userId); // Armazena o ID do usuário
+            localStorage.setItem('username', data.username); // Armazena o username do usuário
+            window.location.href = 'game.html'; // Redireciona para a página do jogo
         } else {
-            alert(data.error || 'Credenciais inválidas');
+            const data = await response.json();
+            alert(data.error || 'Credenciais inválidas.');
         }
     } catch (error) {
-        console.error('Erro:', error);
-        alert('Erro ao conectar com o servidor');
+        alert('Erro ao conectar com o servidor.');
     }
 });
 
-
-
-
-// Função para exibir o tipo de usuário na página de jogos
-document.getElementById('userRole')?.textContent = localStorage.getItem('userRole') || 'usuário';
+// Exibir o tipo de usuário na página de jogos
+if (document.getElementById('userRole')) {
+    document.getElementById('userRole').textContent = localStorage.getItem('userRole') || 'usuário';
+}
 
 // Função para fazer logout
 document.getElementById('logoutButton')?.addEventListener('click', () => {
     localStorage.removeItem('userRole');
-    window.location.href = 'index.html';
+    window.location.href = '/';
 });
+
+// Função para carregar comentários
+async function loadComments() {
+    try {
+        const response = await fetch('/comments');
+        const comments = await response.json();
+
+        const commentsList = document.getElementById('commentsList');
+        commentsList.innerHTML = '';
+
+        comments.forEach(comment => {
+            const li = document.createElement('li');
+            li.textContent = comment.text;
+            commentsList.appendChild(li);
+        });
+    } catch (error) {
+        console.error('Erro:', error);
+    }
+}
+
+// Carrega os comentários ao carregar a página
+if (document.getElementById('commentsList')) {
+    loadComments();
+}

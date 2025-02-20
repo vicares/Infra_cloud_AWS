@@ -1,46 +1,36 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { User } = require("../models");
 const router = express.Router();
 
-const JWT_SECRET = process.env.JWT_SECRET || "chave_secreta";
-
 // Método para comparar senhas no modelo User
-User.prototype.checksenha = async function (password) {
+User.prototype.checkPassword = async function (password) {
     return await bcrypt.compare(password, this.password);
 };
 
 // Criar um usuário (Cadastro)
 router.post('/register', async (req, res) => {
-    const { email, password, role } = req.body;
+    const { email, password, role, username } = req.body;
 
-    // Verificação para garantir que todos os campos foram preenchidos
-    if (!email || !password || !role) {
+    if (!email || !password || !role || !username) {
         return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     }
 
     try {
-        // Verificar se o email já está cadastrado
-        const userExists = await User.findOne({ where: { email } });
-        if (userExists) {
-            return res.status(400).json({ error: 'Email já está em uso.' });
-        }
+        console.log('Tentando criar usuário com os dados:', { email, password, role, username });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        await User.create({ email, password: hashedPassword, role, username });
 
-        // Criando o novo usuário
-        const newUser = await User.create({ email, password, role });
-
-        // Retornando resposta de sucesso
-        res.status(201).json({ message: 'Usuário criado com sucesso', user: newUser });
+        // Retorna apenas a mensagem, sem dados sensíveis
+        return res.status(201).json({ message: 'Usuário criado com sucesso' });
     } catch (error) {
-        // Caso ocorra um erro, retornamos uma mensagem
-        console.error(error);
-        res.status(500).json({ error: 'Erro ao criar conta.' });
+        console.error('Erro ao criar usuário:', error);
+        return res.status(500).json({ error: 'Erro ao criar usuário' });
     }
 });
 
 // Autenticação (Login)
-router.post('/index', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const { email, password, role } = req.body;
 
@@ -54,7 +44,7 @@ router.post('/index', async (req, res) => {
             return res.status(401).json({ error: "Credenciais inválidas." });
         }
 
-        res.json({ message: "Login bem-sucedido!" });
+        res.json({ message: "Login bem-sucedido!", userId: user.id, username: user.username });
     } catch (error) {
         res.status(500).json({ error: "Erro ao fazer login", details: error.message });
     }
@@ -63,12 +53,11 @@ router.post('/index', async (req, res) => {
 // Listar usuários cadastrados (somente para administradores)
 router.get("/", async (req, res) => {
     try {
-        // Busca todos os usuários, retornando apenas os campos id, email e role
-        const users = await User.findAll({ attributes: ["id", "email", "role"] });
+        // Buscar todos os usuários retornando apenas id, email e role
+        const users = await User.findAll({ attributes: ["id", "email", "role", "username"] });
         res.json(users);
     } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
-        res.status(500).json({ error: "Erro ao buscar usuários" });
+        res.status(500).json({ message: "Erro ao buscar usuários." });
     }
 });
 
@@ -77,20 +66,17 @@ router.delete("/:id", async (req, res) => {
     try {
         const { id } = req.params;
 
-        // Busca o usuário pelo ID
+        // Buscar usuário pelo ID
         const user = await User.findByPk(id);
         if (!user) {
-            return res.status(404).json({ error: "Usuário não encontrado" });
+            return res.status(404).json({ message: "Usuário não encontrado." });
         }
 
-        // Deleta o usuário
+        // Deletar usuário
         await user.destroy();
-
-        // Retorna sucesso
-        res.json({ message: "Usuário deletado com sucesso" });
+        res.json({ message: "Usuário removido com sucesso!" });
     } catch (error) {
-        console.error("Erro ao deletar usuário:", error);
-        res.status(500).json({ error: "Erro ao deletar usuário" });
+        res.status(500).json({ message: "Erro ao remover usuário." });
     }
 });
 

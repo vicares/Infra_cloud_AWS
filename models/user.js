@@ -13,9 +13,18 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.ENUM('aluno', 'professor'),
           allowNull: false,
       },
+      username: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          unique: true,
+      },
   }, {
       tableName: 'Users',
   });
+
+  User.associate = (models) => {
+    User.hasMany(models.Comment, { foreignKey: "userId" });
+  };
 
   return User;
 };
