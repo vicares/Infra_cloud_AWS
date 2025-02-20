@@ -50,7 +50,7 @@ document.getElementById('loginForm')?.addEventListener('submit', async function 
         if (response.ok) {
             const data = await response.json();
             localStorage.setItem('userRole', role); // Armazena o tipo de usuário
-            localStorage.setItem('userId', data.userId); // Armazena o ID do usuário
+            localStorage.setItem('id_user', data.id_user); // Armazena o ID do usuário
             localStorage.setItem('username', data.username); // Armazena o username do usuário
             window.location.href = 'game.html'; // Redireciona para a página do jogo
         } else {

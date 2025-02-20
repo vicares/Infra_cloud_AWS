@@ -17,13 +17,13 @@ router.get('/comments', async (req, res) => {
 // Rota para enviar comentários
 router.post('/comments', async (req, res) => {
     try {
-        const { text, userId } = req.body;
+        const { text, id_user } = req.body;
 
-        if (!text || !userId) {
+        if (!text || !id_user) {
             return res.status(400).json({ error: "O comentário e o ID do usuário são obrigatórios." });
         }
 
-        const newComment = await Comment.create({ text, userId });
+        const newComment = await Comment.create({ text, id_user });
         res.status(201).json(newComment);
     } catch (error) {
         res.status(500).json({ error: "Erro ao enviar comentário", details: error.message });

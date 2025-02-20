@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
             return res.status(401).json({ error: "Credenciais inválidas." });
         }
 
-        res.json({ message: "Login bem-sucedido!", userId: user.id, username: user.username });
+        res.json({ message: "Login bem-sucedido!", id_user: user.id, username: user.username });
     } catch (error) {
         res.status(500).json({ error: "Erro ao fazer login", details: error.message });
     }

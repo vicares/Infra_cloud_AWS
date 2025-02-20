@@ -10,7 +10,7 @@ module.exports = {
         primaryKey: true,
         allowNull: false
       },
-      message: {
+      text: {
         type: Sequelize.TEXT,
         allowNull: false
       },
@@ -21,9 +21,14 @@ module.exports = {
           model: "Users",
           key: "id"
         },
-        onDelete: "CASCADE" // Deleta comentários se o usuário for removido
+        onDelete: "CASCADE"
       },
       createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
+      },
+      updatedAt: {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
