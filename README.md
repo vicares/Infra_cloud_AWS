@@ -112,14 +112,14 @@ http://localhost:5050
 
  1) Vá em Adicionar Novo Servidor
  2) De um nome para o servidor
- 3) Vá em conexão e preencha da seguinte forma:
-    ```bash
-    Host: db
-    Port: 5432
-    Database: postgres
-    Username: postgres
-    Senha: postgres
-    ```
+ 3) Vá em conexão e preencha com os seguintes dados:
+
+- `Host: db`
+- `Port: 5432`
+- `Database: postgres`
+- `Username: postgres`
+- `Senha: postgres`
+  
  4) Salve as alterações
  
 ### **4. Visualização das tabelas**
