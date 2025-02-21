@@ -2,7 +2,11 @@
 
 ## Descrição
 
-Este é um projeto de API para um catálogo de jogos desenvolvido com **Node.js**, **PostgreSQL** e **Docker**. A aplicação permite o cadastro e login de usuários com diferentes papéis (Aluno ou Professor), além de funcionalidades para interação com jogos e comentários.
+Este é um projeto de API para um catálogo de jogos desenvolvido com **Node.js**, **PostgreSQL** e **Docker**. A aplicação permite o cadastro e login de usuários com diferentes papéis (Aluno ou Professor), a princípio o login leva a um vídeo com a opção de deixar comentários abaixo.
+
+##Objetivo
+
+Este projeto foi feito como um dos requisitos para a conclusão da diciplina Infraestrutura em Nuvem com AWS. A idéia é criar uma API que realize operações CRUD para conversar com um banco de dados PostgreSQL, inserida em um Docker. E então utiliza-la na implementação nas atividades do curso de certificação da AWS Cloud Practitioner.
 
 ## Tecnologias Utilizadas
 
